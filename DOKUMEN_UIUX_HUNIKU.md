@@ -190,156 +190,141 @@ graph TD
 
 ---
 
-## 7. WIREFRAME & MOCKUP VISUAL ANTARMUKA (VERSI WEBSITE)
+## 7. PERANCANGAN WIREFRAME ANTARMUKA SISTEM (LOW-MID FIDELITY WIREFRAMES)
 
-Berikut adalah spesifikasi mendalam untuk seluruh antarmuka utama pada versi website Huniku, lengkap dengan tangkapan layar antarmuka resolusi tinggi:
+Berikut adalah cetak biru perancangan wireframe tingkat menengah (*mid-fidelity wireframes*) untuk seluruh modul antarmuka web HUNIKU, dirancang dengan pendekatan arsitektur komponen berbasis kisi (*grid canvas*), kotak placeholder gambar standar (bergaris silang diagonal X), dan tata letak ergonomis ala tools wireframing industri (Pidoco/Balsamiq):
 
 ---
 
-### 7.1. Hero Section & Modern Floating Search Pod (Fresha Style)
+### 7.1. Hero Section & Modern Floating Search Pod Wireframe
 
-![Mockup 1: Hero Section & Modern Floating Search Pod](assets/mockup/01_hero_search_popover.png)
+![Wireframe 1: Hero Section & Modern Floating Search Pod](assets/wireframe/wireframe_01_hero_search.png)
 
-- **Tujuan Halaman:** Menyambut pengunjung dengan estetika arsitektural mewah, memperkenalkan nilai utama platform, dan menyediakan alat pencarian kavling instan.
+- **Tujuan Halaman:** Menyambut pengunjung dengan estetika arsitektural bersih, memperkenalkan nilai utama platform, dan menyediakan alat pencarian kavling instan.
 - **Tata Letak & Hierarki Visual:**
-  - **Sticky Navbar:** Latar putih bersih dengan efek `backdrop-filter: blur(12px)`, logo wordmark `huniku.` dengan dot emas, 5 tombol navigasi utama berbentuk pil, chip peran aktif pengguna (*Calon Pembeli: Rizky*), tombol akses cepat *Booking Pass*, dan tombol *Simulasi Akun*.
-  - **Hero Title & Subtitle:** Judul display berani (*"Pesan kavling dan hunian impian secara instan"*) dengan tipografi Plus Jakarta Sans bobot 800, dipadukan dengan pengantar bernuansa hangat tentang keterbukaan data real-time di kawasan Sukarame, Natar, dan Kedaton.
+  - **Sticky Navbar:** Latar putih bersih dengan logo wordmark `huniku.`, 5 tombol navigasi utama berbentuk pil (*Katalog Kavling*, *Masterplan 2D*, *Simulasi KPR*, *Portal Warga*, *Konsol Pengembang*), chip peran aktif pengguna (*User: Rizky*), dan tombol akses cepat *Booking Pass*.
+  - **Hero Title & Subtitle:** Judul display berani (*"Pesan kavling dan hunian impian secara instan"*), dipadukan dengan pengantar bernuansa hangat tentang keterbukaan data real-time di kawasan Sukarame, Natar, dan Kedaton.
   - **Signature Floating Search Pod:** Kapsul pencarian putih mengambang dengan 3 segmen terukur:
-    1. *Kawasan Perumahan* (Ikon rumah, teks aktif, chevron rotasi).
-    2. *Tipe Bangunan* (Ikon grid unit, teks aktif, chevron rotasi).
-    3. *Anggaran Maksimal* (Ikon jam/anggaran, teks aktif, chevron rotasi).
-    - Tombol aksi utama Velvet Maroon berlabel **Cari** di sisi kanan pod.
-  - **Custom Popover Dropdown (Inovasi UX):** Menu melayang dengan sudut 20px, efek drop-shadow `0 18px 48px rgba(17,20,23,0.14)`. Menampilkan label kategori (*PILIH KAWASAN CLUSTER*), judul tebal unit (*Grand Alessandra Residence*), subteks deskriptif (*Sukarame, Bandar Lampung • 16 Kavling*), dan centang aktif maroon (`✓`).
-  - **Live Indicator Strip:** Titik hijau berdenyut (*pulsing dot*) dengan status teks: *"42 kavling pilot terdaftar resmi • 28 unit tersedia siap disurvei hari ini"*.
-  - **Pill Quick Actions:** Tombol pintas untuk langsung beralih ke Masterplan 2D dan Kalkulator KPR Bank.
+    1. *Kawasan Perumahan* (Ikon rumah, teks aktif, indikator chevron panah).
+    2. *Tipe Bangunan* (Teks pilihan tipe, indikator chevron).
+    3. *Anggaran Maksimal* (Teks kisaran harga, indikator chevron).
+    - Tombol aksi utama kontras berlabel **Cari** di sisi kanan pod.
+  - **Custom Popover Dropdown (Wireframe Menu):** Menu melayang dengan sudut 16px. Menampilkan label kategori (*PILIH KAWASAN CLUSTER*), judul tebal unit (*Grand Alessandra Residence*), subteks deskriptif (*Sukarame • 16 Kavling*), dan tanda centang aktif (`✓`).
+  - **Live Indicator Strip:** Titik hijau dengan teks status: *"42 kavling pilot terdaftar resmi • 28 unit tersedia siap disurvei hari ini"*.
 
 ---
 
-### 7.2. Marketplace Catalog & Grid Kartu Properti Responsif
+### 7.2. Marketplace Catalog & Grid Kartu Properti Wireframe
 
-![Mockup 2: Grid Katalog Unit Properti](assets/mockup/02_catalog_cards_grid.png)
+![Wireframe 2: Grid Katalog Unit Properti](assets/wireframe/wireframe_02_catalog_grid.png)
 
 - **Tujuan Halaman:** Menyajikan katalog kavling dan hunian siap bangun dalam tata letak kartu modern yang mudah dipindai (*scannable*).
 - **Tata Letak & Hierarki Visual:**
   - **Section Header & Category Filter:** Judul seksi *"Direkomendasikan di Bandar Lampung"* dengan subteks jaminan legalitas sertifikat SHM pecah dan izin PBG. Di sebelah kanan terdapat deretan chip filter kategori berbentuk kapsul (*Semua Unit*, *Tipe 36*, *Tipe 45*, *Tipe 54 Hook*).
-  - **Fresha Property Cards Grid:**
-    - Tata letak grid 3 kolom responsif dengan celah (*gap*) 24px.
-    - Setiap kartu memiliki sudut lengkung 20px, border tipis, dan efek *hover lift* melayang halus (`translateY(-5px)`).
-    - **Fasad Foto 16:10:** Foto rumah resolusi tinggi dengan radius sudut 16px.
-    - **Floating Badges:** Badge ketersediaan di pojok kiri atas (Hijau soft: *Tersedia*, Amber soft: *Sedang Dibooking*, Abu: *Terjual*) dan tombol lingkaran favorit di pojok kanan atas.
-    - **Informasi Unit Terstruktur:** Nama kluster perumahan, kode kavling tebal (misal `BLOK A-01`), tag tipe bangunan maroon, ringkasan spesifikasi (Luas Bangunan/Tanah, Kamar, Arah Hadap), harga resmi tebal, estimasi cicilan KPR per bulan, dan tombol aksi pil Maroon (*Lihat Detail & Pesan*).
+  - **Property Cards Grid Wireframe:**
+    - Tata letak grid 3 kolom responsif dengan celah (*gap*) 20px.
+    - Setiap kartu memiliki sudut lengkung 16px, border wireframe 2px.
+    - **Fasad Foto Placeholder (Box with Diagonal X):** Kotak placeholder foto bergaris silang diagonal X dengan label teks identifikasi unit (misal `[Foto Fasad BLOK A-01]`).
+    - **Floating Badges:** Badge ketersediaan di pojok kiri atas (Hijau: *TERSEDIA*, Kuning: *SEDANG DIBOOKING*).
+    - **Informasi Unit Terstruktur:** Nama kluster perumahan, kode kavling tebal (misal `BLOK A-01 (Tipe 45 / 90)`), ringkasan spesifikasi (LB/LT, Kamar, Arah Hadap), harga resmi tebal, dan tombol aksi pil (*Pesan Kavling* / *Lihat Detail*).
 
 ---
 
-### 7.3. Modal Detail Unit & Spesifikasi Arsitektural Lengkap
+### 7.3. Modal Detail Unit & Spesifikasi Arsitektural Wireframe
 
-![Mockup 3: Modal Detail Unit Arsitektural](assets/mockup/03_modal_detail_unit.png)
+![Wireframe 3: Modal Pop-up Detail Spesifikasi](assets/wireframe/wireframe_03_modal_detail.png)
 
 - **Tujuan Halaman:** Memberikan transparansi menyeluruh atas spesifikasi teknis bangunan, legalitas tanah, dan fasilitas sebelum pembeli melakukan pemesanan.
 - **Tata Letak & Hierarki Visual:**
-  - **Backdrop Overlay:** Lapisan semi-transparan gelap dengan efek blur lembut (`backdrop-filter: blur(8px)`).
-  - **Modal Container:** Kotak dialog putih berlekuk 24px di tengah layar dengan tombol tutup `✕` berbingkai lingkaran di pojok kanan atas.
-  - **Visual Banner:** Foto fasad unit properti proporsional dengan badge status ketersediaan.
+  - **Backdrop Overlay:** Lapisan semi-transparan gelap di latar belakang.
+  - **Modal Container:** Kotak dialog putih berlekuk 20px di tengah layar dengan tombol tutup bulat `✕` di pojok kanan atas.
+  - **Visual Banner Placeholder:** Kotak placeholder foto fasad penuh rasio 16:9 bergaris silang diagonal X.
   - **Grid Spesifikasi 6-Poin:**
-    1. *Luas Bangunan & Tanah* (misal: 45 m² / 90 m²).
+    1. *Luas Bangunan & Tanah* (45 m² / 90 m²).
     2. *Kamar Tidur & Mandi* (2 KT / 1 KM).
-    3. *Arah Hadap Bangunan* (Hadap Timur - Matahari Pagi).
-    4. *Pondasi & Rangka* (Batu Belah & Beton Bertulang).
+    3. *Arah Hadap Bangunan* (Timur - Matahari Pagi).
+    4. *Pondasi & Struktur* (Beton Bertulang SNI).
     5. *Instalasi Utilitas* (PLN 1300 VA & Sumur Bor 32m).
-    6. *Status Legalitas* (Sertifikat SHM Pecah & PBG Lengkap).
-  - **Deskripsi Arsitektur:** Penjelasan naratif keunggulan sirkulasi udara plafon tinggi 3.6m, row jalan aspal 8 meter, dan sistem gerbang *one gate system*.
-  - **Footer Transaksi:** Kotak rincian harga total, estimasi cicilan per bulan, tombol konsultasi sales, dan tombol emas/maroon utama **"Pesan & Kunci Unit Ini"**.
+    6. *Status Legalitas* (SHM Pecah & PBG Lengkap).
+  - **Deskripsi Arsitektur:** Penjelasan naratif keunggulan plafon tinggi 3.6m dan jalan row 8m.
+  - **Footer Transaksi:** Rincian nominal harga total, tombol *Konsultasi Sales*, dan tombol utama **"Pesan & Kunci Kavling Sekarang"**.
 
 ---
 
-### 7.4. Digital Booking Pass (Anti-Double Booking) & QR Verification
+### 7.4. Digital Booking Pass (Anti-Double Booking) Wireframe
 
-![Mockup 4: Tiket Digital Booking Pass Resmi](assets/mockup/04_modal_booking_pass.png)
+![Wireframe 4: Tiket Digital Booking Pass Resmi](assets/wireframe/wireframe_04_booking_pass.png)
 
 - **Tujuan Halaman:** Menerbitkan bukti sah penguncian kavling digital berformat *boarding pass* yang membuktikan kavling telah terkunci secara atomik.
 - **Tata Letak & Hierarki Visual:**
-  - **Header Tiket Velvet Maroon:** Logo Huniku dengan label besar *"OFFICIAL BOOKING PASS"*, kode unik transaksi tebal (misal `HN-2026-A01`), dan badge hijau terang `TERKUNCI AMAN (ANTI-DOUBLE BOOKING)`.
-  - **Badan Tiket Krem Gading (Perforated Edge):**
-    - Identitas Pemesan: Nama Calon Pembeli (*Rizky Pratama*), nomor kontak terverifikasi, dan stempel tanggal/waktu transaksi.
-    - Kavling Terpilih: Kluster perumahan, nomor blok kavling, tipe bangunan, dan harga transaksi.
-    - **QR Code Resmi:** Barcode QR digital resolusi tajam untuk pemindaian instan oleh petugas kantor pemasaran saat verifikasi fisik.
-  - **Langkah Verifikasi Selanjutnya:** Panduan 3 langkah terstruktur (Kunjungan kantor pemasaran dalam 3x24 jam, membawa berkas e-KTP/KK asli, dan konsultasi bank).
-  - **Aksi Tiket:** Tombol cetak/simpan tiket PDF dan tombol tutup modal.
+  - **Header Tiket Wireframe:** Label besar *"OFFICIAL BOOKING PASS"*, kode unik transaksi monospace tebal (`HN-2026-A01`), dan badge penegasan `TERKUNCI AMAN (ANTI-DOUBLE BOOKING)`.
+  - **Badan Tiket (Perforated Edge):**
+    - Identitas Pemesan: Nama Calon Pembeli (*Rizky Pratama*), kavling terpilih (*BLOK A-01*), dan stempel waktu transaksi (*07 Okt 2026, 20:15 WIB*).
+    - **QR Code Placeholder Box:** Kotak verifikasi QR Code dengan garis putus-putus untuk pemindaian resmi loket pemasaran.
+  - **Checklist 3 Langkah Verifikasi:** Panduan terstruktur (kunjungan kantor 3x24 jam, bawa e-KTP/KK asli, validasi fisik).
+  - **Aksi Tiket:** Tombol *Simpan Tiket PDF* dan tombol *Tutup / Kembali ke Katalog*.
 
 ---
 
-### 7.5. Masterplan Kawasan 2D & Inspector Denah Interaktif
+### 7.5. Masterplan Kawasan 2D & Inspector Denah Wireframe
 
-![Mockup 5: Masterplan Kawasan 2D & Denah Interaktif](assets/mockup/05_masterplan_2d.png)
+![Wireframe 5: Masterplan Kawasan 2D & Denah Interaktif](assets/wireframe/wireframe_05_masterplan_2d.png)
 
 - **Tujuan Halaman:** Memberikan pemahaman spasial tata letak kavling, jalan boulevard utama, taman lingkungan, dan arah mata angin dalam format denah interaktif.
 - **Tata Letak & Hierarki Visual:**
-  - **Header & Filter Kluster:** Navigasi cepat untuk berpindah masterplan antara *Grand Alessandra*, *Sentral Garden*, dan *Villa Permata*.
-  - **Kanvas Denah Vektor 2D:**
-    - Visualisasi jalan aspal perumahan row 8 meter, gerbang masuk *one gate system*, pos keamanan, taman bermain anak, dan masjid perumahan.
-    - Blok-blok kavling dengan kode warna status: Hijau (Tersedia), Kuning Emas (Sedang Dibooking), dan Abu-abu (Terjual).
-    - Setiap petak kavling dapat diklik secara interaktif.
+  - **Header Denah:** Judul peta masterplan 2D dan legenda kode warna status kavling (Hijau = Tersedia, Kuning = Booking, Abu = Terjual).
+  - **Kanvas Masterplan 2D:**
+    - Baris kavling utara (A-01 sampai A-05).
+    - Jalan Boulevard Utama ROW 8 Meter (Hotmix).
+    - Baris kavling selatan (B-01 sampai B-05).
+    - Petak kavling yang aktif dipilih (A-01) mendapatkan border tebal penanda interaksi aktif.
   - **Inspector Sidebar (Kanan):**
-    - Kartu detail spesifikasi unit yang sedang diklik pada peta.
-    - Menampilkan kode blok, luas kavling, arah hadap matahari pagi/sore, harga, serta tombol langsung menuju modal pemesanan.
+    - Kartu detail spesifikasi kavling terpilih: kode blok, badge status, tipe 45/90, hadap matahari, harga total, dan tombol pemesanan unit.
 
 ---
 
-### 7.6. Kalkulator Simulasi KPR Perbankan & Checklist Berkas
+### 7.6. Kalkulator Simulasi KPR Perbankan Wireframe
 
-![Mockup 6: Kalkulator Simulasi KPR Perbankan](assets/mockup/06_simulasi_kpr.png)
+![Wireframe 6: Kalkulator Simulasi KPR](assets/wireframe/wireframe_06_simulasi_kpr.png)
 
 - **Tujuan Halaman:** Menyederhanakan edukasi kelayakan finansial calon pembeli rumah pertama melalui perhitungan anuitas KPR riil dari bank mitra.
 - **Tata Letak & Hierarki Visual:**
-  - **Bank Partner Selector:** Tiga kartu bank rekanan resmi dengan informasi suku bunga transparan:
-    - *BTN Syariah* (Suku bunga 4.75% fixed 3 tahun).
-    - *Bank Mandiri* (Suku bunga 5.25% fixed 5 tahun).
-    - *Bank BCA* (Suku bunga 5.50% fixed 3 tahun).
+  - **Bank Partner Cards:** Pilihan 3 bank rekanan resmi (*BTN Syariah 4.75%*, *Bank Mandiri 5.25%*, *Bank BCA 5.50%*).
   - **Slider Kontrol Interaktif:**
-    - Slider Harga Properti (Rp 250 Jt – Rp 1 Miliar).
-    - Slider Uang Muka / DP (10% – 50%).
-    - Slider Jangka Waktu / Tenor (5 tahun – 25 tahun).
-  - **Rangkuman Estimasi Finansial:** Kartu sorotan cicilan per bulan dengan angka nominal besar, rincian plafon pokok pinjaman, dan minimal penghasilan bulanan yang disarankan.
-  - **Interactive Document Checklist:** Daftar centang interaktif berkas fisik yang dibutuhkan (Fotokopi KTP, KK, NPWP, Slip Gaji 3 Bulan Terakhir, Rekening Koran) yang status centangnya tersimpan secara otomatis.
+    - Slider Harga Properti (Rp 385.000.000).
+    - Slider Uang Muka / DP (20% = Rp 77.000.000).
+    - Slider Jangka Waktu / Tenor (15 Tahun / 180 Bulan).
+  - **Panel Hasil Finansial:** Kartu sorotan estimasi angsuran bulanan nominal besar (*Rp 2.450.000 / bln*), plafon pinjaman, dan suku bunga.
+  - **Checklist Dokumen Bank:** 4 kotak centang dokumen pra-kualifikasi bank (e-KTP, KK, Slip Gaji, Rekening Koran).
 
 ---
 
-### 7.7. Portal Layanan Warga (Huniku Resident) & Tracker Garansi 180 Hari
+### 7.7. Portal Layanan Warga & Tracker Garansi 180 Hari Wireframe
 
-![Mockup 7: Portal Layanan Warga & Tracker Garansi](assets/mockup/07_portal_warga.png)
+![Wireframe 7: Portal Layanan Warga & Tracker Garansi](assets/wireframe/wireframe_07_portal_warga.png)
 
 - **Tujuan Halaman:** Memberikan ekosistem layanan purna-jual menyeluruh bagi warga yang telah menempati hunian, menjamin hak komplain bebas biaya dalam masa retensi.
 - **Tata Letak & Hierarki Visual:**
-  - **Kartu Identitas Hunian Warga:** Menampilkan profil pemilik rumah terverifikasi (*Ibu Ratna - Blok B-05*), nama kluster, tanggal serah terima kunci, dan status hunian.
-  - **Warranty Retention Tracker (180 Hari):**
-    - Bar progres visual sisa hari masa garansi pemeliharaan gratis dari developer (*142 hari tersisa*).
-    - Keterangan jaminan perbaikan gratis untuk kebocoran atap, dinding retak rambut, dan instalasi air/pipa.
-  - **Ringkasan Tagihan IPL (Iuran Pemeliharaan Lingkungan):** Status pembayaran iuran keamanan dan kebersihan bulan berjalan (*Lunas*).
-  - **Formulir Lapor Kerusakan Berfoto:**
-    - Pilihan kategori aduan: *Air & Pipa*, *Bangunan Fisik*, *Kelistrikan*, *Fasilitas Umum*.
-    - Area unggah foto bukti kerusakan fisik.
-    - Kolom deskripsi kendala ringkas dan tombol kirim laporan.
-  - **Tabel Pelacakan Status Aduan:** Riwayat tiket servis dengan status *Menunggu Review*, *Teknisi Ditugaskan*, hingga *Selesai*.
+  - **Kartu Identitas Hunian Warga:** Profil pemilik terverifikasi (*Ibu Ratna — Sentral Garden Blok B-05*).
+  - **Garansi Retensi Bar (180 Hari):** Bar kemajuan visual sisa hari garansi gratis pemeliharaan developer (*142 Hari Tersisa*).
+  - **Status Iuran IPL:** Rincian tagihan pemeliharaan lingkungan bulanan dengan tag *LUNAS*.
+  - **Formulir Pelaporan Kerusakan:**
+    - Tombol bubble kategori (*Pipa & Air*, *Dinding/Atap*, *Kelistrikan*, *Fasilitas Umum*).
+    - Dropzone foto bukti kerusakan fisik bergaris silang diagonal X.
+    - Kolom input catatan kendala dan tombol kirim aduan.
 
 ---
 
-### 7.8. Konsol Master Pengembang (Developer & Admin Console)
+### 7.8. Konsol Master Pengembang & Inventaris Kavling Wireframe
 
-![Mockup 8: Konsol Master Pengembang](assets/mockup/08_konsol_pengembang.png)
+![Wireframe 8: Konsol Pengembang](assets/wireframe/wireframe_08_konsol_admin.png)
 
 - **Tujuan Halaman:** Dashboard operasional kantor pengembang untuk memantau omset penjualan kawasan, memvalidasi berkas pembeli, dan mengelola stok kavling satu pintu.
 - **Tata Letak & Hierarki Visual:**
-  - **Statistik Metrik Bisnis Utama:** 4 kartu ringkasan omset:
-    1. *Total Unit Kavling (42 Unit)*.
-    2. *Unit Tersedia (28 Unit)*.
-    3. *Unit Dibooking (6 Unit)*.
-    4. *Unit Terjual / Akad (8 Unit)*.
-  - **Tabel Manajemen Status Kavling Real-Time:**
-    - Daftar lengkap seluruh unit perumahan lintas 3 kluster.
-    - Kolom kode blok, kluster perumahan, tipe unit, harga, pemesan aktif, dan status atomik.
-    - **Dropdown Kontrol Status Instan:** Admin dapat mengubah status unit (*Tersedia*, *Sedang Dibooking*, *Terjual*) secara langsung pada tabel, yang secara otomatis langsung tersinkronisasi ke katalog publik.
-  - **Tab Antrean Verifikasi KPR:** Rekap data calon pembeli yang telah mengajukan simulasi dan berkas untuk jadwal wawancara bank.
-  - **Tab Disposisi Teknisi:** Rekap laporan aduan warga yang siap ditugaskan ke vendor/mandor konstruksi perumahan.
+  - **Statistik Metrik Bisnis Utama:** 4 kartu ringkasan: Total Kavling (42), Unit Tersedia (28), Sedang Dibooking (6), Terjual/Akad (8).
+  - **Tabel Manajemen Status Kavling:**
+    - Daftar inventaris kavling (Kode Kavling, Kawasan Cluster, Tipe Unit, Harga Resmi).
+    - Kontrol dropdown status atomik pada setiap baris (*AVAILABLE*, *BOOKED*, *SOLD*) yang memungkinkan admin mengubah status kavling secara instan.
 
 ---
 
