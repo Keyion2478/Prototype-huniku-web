@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huniku - Pesan kavling dan rumah impian secara instan</title>
+
+  <!-- Typography: Plus Jakarta Sans (Modern Geometric Sans like Roobert/AktivGrotesk on Fresha) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 1. STICKY FRESHA-STYLE NAVBAR -->
+  <header class="fresha-navbar">
+    <div class="nav-inner-container">
+      <!-- Left: Clean Wordmark Logo -->
+      <a href="javascript:void(0)" class="nav-logo-link" onclick="navigateTo('viewKatalog')">
+        <span class="logo-mark">huniku</span>
+        <span class="logo-dot"></span>
+      </a>
+
+      <!-- Center: Clean View Navigation -->
+      <nav class="nav-segmented-views" aria-label="Navigasi Utama">
+        <button type="button" class="nav-view-btn active" data-nav="viewKatalog" onclick="navigateTo('viewKatalog')">Katalog Kavling</button>
+        <button type="button" class="nav-view-btn" data-nav="viewSitePlan" onclick="navigateTo('viewSitePlan')">Masterplan 2D</button>
+        <button type="button" class="nav-view-btn" data-nav="viewKPRGuide" onclick="navigateTo('viewKPRGuide')">Simulasi KPR</button>
+        <button type="button" class="nav-view-btn" data-nav="viewResident" onclick="navigateTo('viewResident')">Portal Warga</button>
+        <button type="button" class="nav-view-btn" data-nav="viewAdmin" onclick="navigateTo('viewAdmin')">Konsol Pengembang</button>
+      </nav>
+
+      <!-- Right: Action Cluster -->
+      <div class="nav-right-actions">
+        <button type="button" class="nav-role-chip" onclick="openModal('modalAuthRoleSwitcher')" title="Ubah profil pengguna simulasi">
+          <span class="status-live-dot"></span>
+          <span id="navRoleDisplay">Calon Pembeli: Rizky</span>
+        </button>
+
+        <button type="button" class="btn-pill-pass" onclick="openModal('modalBookingPassSuccess')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <line x1="6" y1="8" x2="6" y2="8"></line>
+            <line x1="10" y1="8" x2="18" y2="8"></line>
+            <line x1="6" y1="12" x2="6" y2="12"></line>
+            <line x1="10" y1="12" x2="18" y2="12"></line>
+          </svg>
+          <span>Booking Pass</span>
+        </button>
+
+        <button type="button" class="btn-pill-primary" onclick="openModal('modalAuthRoleSwitcher')">
+          Simulasi Akun
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. MAIN APPLICATION CONTENT WRAPPER -->
+  <main class="main-body-container">
+
+    <!-- HERO SECTION (FRESHA SIGNATURE SEARCH HERO) -->
+    <section class="fresha-hero-zone" id="heroWebBanner">
+      <!-- Ambient Pastel Backdrop Lighting -->
+      <div class="hero-ambient-glow"></div>
+
+      <div class="hero-content-box">
+        <h1 class="hero-fresha-headline">
+          Pesan kavling dan hunian impian secara instan
+        </h1>
+        <p class="hero-fresha-subheadline">
+          Temukan hunian terbaik di kawasan Sukarame, Natar, dan Kedaton dengan transparansi ketersediaan real-time tanpa double booking.
+        </p>
+
+        <!-- THE ICONIC FRESHA SEARCH POD (CUSTOM MODERN DROPDOWNS & ANIMATIONS) -->
+        <div class="fresha-search-pod">
+          <form class="search-pod-form" onsubmit="event.preventDefault(); renderCatalog();">
+            
+            <!-- Segment 1: Kawasan / Cluster -->
+            <div class="search-pod-segment dropdown-parent" id="segmentCluster" onclick="toggleDropdown(event, 'popoverCluster')">
+              <div class="segment-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <div class="segment-input-wrap">
+                <span class="segment-label">Kawasan Perumahan</span>
+                <div class="segment-value-trigger">
+                  <span class="value-text" id="displayClusterVal">Semua Kawasan (3 Cluster)</span>
+                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <input type="hidden" id="filterClusterSelect" value="ALL">
+              </div>
+
+              <!-- Modern Custom Popover Menu -->
+              <div class="fresha-dropdown-popover" id="popoverCluster" onclick="event.stopPropagation()">
+                <div class="popover-section-label">PILIH KAWASAN CLUSTER</div>
+                <div class="popover-options-list">
+                  <div class="popover-option selected" data-value="ALL" onclick="selectDropdownOption('filterClusterSelect', 'displayClusterVal', 'ALL', 'Semua Kawasan (3 Cluster)', 'popoverCluster')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Semua Kawasan (3 Cluster)</strong>
+                      <span class="opt-sub">Seluruh wilayah percontohan Bandar Lampung</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="Grand Alessandra" onclick="selectDropdownOption('filterClusterSelect', 'displayClusterVal', 'Grand Alessandra', 'Grand Alessandra (Sukarame)', 'popoverCluster')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Grand Alessandra Residence</strong>
+                      <span class="opt-sub">Sukarame, Bandar Lampung • 16 Kavling</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="Sentral Garden" onclick="selectDropdownOption('filterClusterSelect', 'displayClusterVal', 'Sentral Garden', 'Sentral Garden (Natar)', 'popoverCluster')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Sentral Garden Residence</strong>
+                      <span class="opt-sub">Natar, Lampung Selatan • 14 Kavling</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="Villa Permata" onclick="selectDropdownOption('filterClusterSelect', 'displayClusterVal', 'Villa Permata', 'Villa Permata (Kedaton)', 'popoverCluster')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Villa Permata Indah</strong>
+                      <span class="opt-sub">Kedaton, Bandar Lampung • 12 Kavling</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pod-divider"></div>
+
+            <!-- Segment 2: Tipe Bangunan -->
+            <div class="search-pod-segment dropdown-parent" id="segmentType" onclick="toggleDropdown(event, 'popoverType')">
+              <div class="segment-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </div>
+              <div class="segment-input-wrap">
+                <span class="segment-label">Tipe Bangunan</span>
+                <div class="segment-value-trigger">
+                  <span class="value-text" id="displayTypeVal">Semua Tipe Unit</span>
+                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <input type="hidden" id="filterTypeSelect" value="ALL">
+              </div>
+
+              <!-- Modern Custom Popover Menu -->
+              <div class="fresha-dropdown-popover" id="popoverType" onclick="event.stopPropagation()">
+                <div class="popover-section-label">PILIH TIPE HUNIAN</div>
+                <div class="popover-options-list">
+                  <div class="popover-option selected" data-value="ALL" onclick="selectDropdownOption('filterTypeSelect', 'displayTypeVal', 'ALL', 'Semua Tipe Unit', 'popoverType')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Semua Tipe Unit</strong>
+                      <span class="opt-sub">Tipe 36, 45, dan 54 Hook</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="Tipe 36" onclick="selectDropdownOption('filterTypeSelect', 'displayTypeVal', 'Tipe 36', 'Tipe 36 (Keluarga Muda)', 'popoverType')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Tipe 36 (Keluarga Muda)</strong>
+                      <span class="opt-sub">LB 36 m² / LT 72–78 m² • 2 Kamar Tidur</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="Tipe 45" onclick="selectDropdownOption('filterTypeSelect', 'displayTypeVal', 'Tipe 45', 'Tipe 45 (Tropis Modern)', 'popoverType')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Tipe 45 (Tropis Modern)</strong>
+                      <span class="opt-sub">LB 45 m² / LT 84–90 m² • Plafon 3.6 Meter</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="Tipe 54" onclick="selectDropdownOption('filterTypeSelect', 'displayTypeVal', 'Tipe 54', 'Tipe 54 (Hook Eksekutif)', 'popoverType')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Tipe 54 (Hook Eksekutif)</strong>
+                      <span class="opt-sub">LB 54 m² / LT 105–110 m² • 3 Kamar Tidur</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pod-divider"></div>
+
+            <!-- Segment 3: Rentang Anggaran -->
+            <div class="search-pod-segment dropdown-parent" id="segmentPrice" onclick="toggleDropdown(event, 'popoverPrice')">
+              <div class="segment-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+              <div class="segment-input-wrap">
+                <span class="segment-label">Anggaran Maksimal</span>
+                <div class="segment-value-trigger">
+                  <span class="value-text" id="displayPriceVal">Semua Kisaran Harga</span>
+                  <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <input type="hidden" id="filterPriceSelect" value="ALL">
+              </div>
+
+              <!-- Modern Custom Popover Menu -->
+              <div class="fresha-dropdown-popover" id="popoverPrice" onclick="event.stopPropagation()">
+                <div class="popover-section-label">PILIH RENTANG ANGGARAN</div>
+                <div class="popover-options-list">
+                  <div class="popover-option selected" data-value="ALL" onclick="selectDropdownOption('filterPriceSelect', 'displayPriceVal', 'ALL', 'Semua Kisaran Harga', 'popoverPrice')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Semua Kisaran Harga</strong>
+                      <span class="opt-sub">Mulai Rp 295 Juta hingga Rp 510 Juta</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="LOW" onclick="selectDropdownOption('filterPriceSelect', 'displayPriceVal', 'LOW', '< Rp 350 Juta', 'popoverPrice')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">&lt; Rp 350 Juta</strong>
+                      <span class="opt-sub">Kavling terjangkau & KPR cicilan ringan</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="MID" onclick="selectDropdownOption('filterPriceSelect', 'displayPriceVal', 'MID', 'Rp 350 Juta - Rp 450 Juta', 'popoverPrice')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">Rp 350 Juta - Rp 450 Juta</strong>
+                      <span class="opt-sub">Pilihan unit menengah paling diminati</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                  <div class="popover-option" data-value="HIGH" onclick="selectDropdownOption('filterPriceSelect', 'displayPriceVal', 'HIGH', '> Rp 450 Juta', 'popoverPrice')">
+                    <div class="opt-text-wrap">
+                      <strong class="opt-title">&gt; Rp 450 Juta</strong>
+                      <span class="opt-sub">Unit hook premium & tanah luas</span>
+                    </div>
+                    <span class="opt-check">✓</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-pod-search">
+              <span>Cari</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Social Proof Counter Bar (Inspired by Fresha: "478.137 janji temu dibuat hari ini") -->
+        <div class="hero-live-counter-strip">
+          <strong>42 kavling pilot</strong> terdaftar resmi • <strong>28 unit tersedia</strong> siap disurvei hari ini
+        </div>
+
+        <!-- Quick Secondary Pills -->
+        <div class="hero-quick-actions">
+          <button type="button" class="btn-quick-outline" onclick="navigateTo('viewSitePlan')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+            <span>Buka Masterplan Kawasan 2D</span>
+          </button>
+          <button type="button" class="btn-quick-outline" onclick="navigateTo('viewKPRGuide')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <line x1="2" y1="10" x2="22" y2="10"></line>
+            </svg>
+            <span>Hitung Simulasi KPR Bank</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 1: KATALOG PROPERTI (FRESHA MARKETPLACE CARDS)     -->
+    <!-- ======================================================== -->
+    <section class="fresha-view-pane active" id="viewKatalog">
+      <div class="catalog-header-strip">
+        <div>
+          <h2 class="fresha-section-title">Direkomendasikan di Bandar Lampung</h2>
+          <p class="fresha-section-subtitle">Kavling pilihan dengan legalitas sertifikat SHM pecah dan izin PBG siap bangun.</p>
+        </div>
+        
+        <!-- Filter Tabs / Chips (Like Fresha Category Chips) -->
+        <div class="fresha-category-chips">
+          <button type="button" class="cat-chip active" onclick="filterByChip(this, 'ALL')">Semua Unit</button>
+          <button type="button" class="cat-chip" onclick="filterByChip(this, 'Tipe 36')">Tipe 36</button>
+          <button type="button" class="cat-chip" onclick="filterByChip(this, 'Tipe 45')">Tipe 45</button>
+          <button type="button" class="cat-chip" onclick="filterByChip(this, 'Tipe 54')">Tipe 54 Hook</button>
+        </div>
+      </div>
+
+      <!-- Marketplace Cards Grid (Rendered by app.js) -->
+      <div class="fresha-cards-grid" id="katalogGridContainer">
+        <!-- Injected reactively by app.js -->
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 2: MASTERPLAN & 2D SITE PLAN MAP                   -->
+    <!-- ======================================================== -->
+    <section class="fresha-view-pane" id="viewSitePlan">
+      <div class="view-header-simple">
+        <div>
+          <h2 class="fresha-section-title">Masterplan Kawasan & Denah 2D</h2>
+          <p class="fresha-section-subtitle">Pilih kavling pada denah untuk memeriksa orientasi matahari, dimensi lahan, dan status ketersediaan.</p>
+        </div>
+        <button type="button" class="btn-pill-pass" onclick="navigateTo('viewKatalog')">
+          Kembali ke Katalog
+        </button>
+      </div>
+
+      <div class="fresha-siteplan-layout">
+        <!-- Vector Map Canvas -->
+        <div class="siteplan-canvas-frame">
+          <div class="siteplan-map-legend">
+            <span class="legend-badge available"><span class="dot"></span> Tersedia</span>
+            <span class="legend-badge booked"><span class="dot"></span> Sedang Dibooking</span>
+            <span class="legend-badge sold"><span class="dot"></span> Terjual / BAST</span>
+          </div>
+
+          <svg class="siteplan-svg-map" viewBox="0 0 600 400" aria-label="Denah Masterplan 2D">
+            <!-- Roadway -->
+            <rect x="0" y="0" width="600" height="400" fill="#F8F9FA" rx="12"/>
+            <rect x="20" y="165" width="560" height="70" fill="#212529" rx="6"/>
+            <line x1="20" y1="200" x2="580" y2="200" stroke="#FFD166" stroke-width="2" stroke-dasharray="12 8"/>
+            <text x="300" y="204" fill="#E9ECEF" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="3">MAIN BOULEVARD ROW 8 METER (HOTMIX)</text>
+
+            <!-- Main Security Gate -->
+            <rect x="20" y="145" width="30" height="110" fill="#343A40" rx="4"/>
+            <text x="35" y="245" fill="#F8F9FA" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" text-anchor="middle" transform="rotate(-90, 35, 245)">ONE GATE SYSTEM</text>
+
+            <!-- Row A (North) -->
+            <g id="rowA">
+              <!-- Lot A-01 -->
+              <rect class="lot-box selected" data-code="BLOK A-01" x="80" y="45" width="85" height="105" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" rx="8"/>
+              <text x="122" y="88" fill="#1B5E20" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" text-anchor="middle">A-01</text>
+              <text x="122" y="108" fill="#2E7D32" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" text-anchor="middle">Tipe 45/90</text>
+              <text x="122" y="126" fill="#388E3C" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">Rp 385 Jt</text>
+
+              <!-- Lot A-08 -->
+              <rect class="lot-box" data-code="BLOK A-08" x="180" y="45" width="85" height="105" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" rx="8"/>
+              <text x="222" y="88" fill="#1B5E20" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" text-anchor="middle">A-08</text>
+              <text x="222" y="108" fill="#2E7D32" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" text-anchor="middle">Tipe 36/72</text>
+              <text x="222" y="126" fill="#388E3C" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">Rp 295 Jt</text>
+
+              <!-- Lot C-02 (Sold) -->
+              <rect class="lot-box" data-code="BLOK C-02" x="280" y="45" width="85" height="105" fill="#F1F3F5" stroke="#CED4DA" stroke-width="1.5" rx="8"/>
+              <text x="322" y="88" fill="#868E96" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" text-anchor="middle">C-02</text>
+              <text x="322" y="108" fill="#ADB5BD" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">TERJUAL</text>
+              <text x="322" y="126" fill="#CED4DA" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">BAST Selesai</text>
+
+              <!-- Green Park -->
+              <rect x="380" y="45" width="185" height="105" fill="#D3F9D8" stroke="#8CE99A" stroke-width="1.5" rx="10"/>
+              <text x="472" y="92" fill="#2B8A3E" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" text-anchor="middle">TAMAN TEMATIK</text>
+              <text x="472" y="112" fill="#2F9E44" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" text-anchor="middle">Ruang Terbuka Hijau</text>
+            </g>
+
+            <!-- Row B (South) -->
+            <g id="rowB">
+              <!-- Lot B-04 -->
+              <rect class="lot-box" data-code="BLOK B-04" x="80" y="250" width="85" height="105" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" rx="8"/>
+              <text x="122" y="295" fill="#1B5E20" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" text-anchor="middle">B-04</text>
+              <text x="122" y="315" fill="#2E7D32" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" text-anchor="middle">Tipe 36/78</text>
+              <text x="122" y="333" fill="#388E3C" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">Rp 320 Jt</text>
+
+              <!-- Lot B-05 (Booked) -->
+              <rect class="lot-box" data-code="BLOK B-05" x="180" y="250" width="85" height="105" fill="#FFF9DB" stroke="#F59F00" stroke-width="2" rx="8"/>
+              <text x="222" y="295" fill="#E67700" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" text-anchor="middle">B-05</text>
+              <text x="222" y="315" fill="#F59F00" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">DIBOOKING</text>
+              <text x="222" y="333" fill="#FAB005" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Verifikasi KPR</text>
+
+              <!-- Lot C-12 (Hook) -->
+              <rect class="lot-box" data-code="BLOK C-12" x="280" y="250" width="90" height="105" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2" rx="8"/>
+              <text x="325" y="295" fill="#1B5E20" font-family="'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" text-anchor="middle">C-12</text>
+              <text x="325" y="315" fill="#2E7D32" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" text-anchor="middle">Hook 54/105</text>
+              <text x="325" y="333" fill="#388E3C" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">Rp 490 Jt</text>
+
+              <!-- Mosque -->
+              <rect x="385" y="250" width="180" height="105" fill="#E7F5FF" stroke="#74C0FC" stroke-width="1.5" rx="10"/>
+              <text x="475" y="295" fill="#1864AB" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" text-anchor="middle">MASJID KAWASAN</text>
+              <text x="475" y="315" fill="#228BE6" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" text-anchor="middle">Fasilitas Ibadah Warga</text>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Sidebar Inspector Card -->
+        <aside class="fresha-inspector-card" id="sitePlanInfoCard">
+          <div class="inspector-badge-row">
+            <span class="status-pill available">Tersedia</span>
+            <span class="inspector-cluster-tag">Grand Alessandra (Sukarame)</span>
+          </div>
+
+          <h3 class="inspector-unit-name">BLOK A-01</h3>
+          <div class="inspector-price-tag">Rp 385.000.000</div>
+
+          <div class="inspector-specs-table">
+            <div class="spec-cell-line"><span>Tipe Rumah:</span> <strong>Tipe 45 / 90 (Tropis)</strong></div>
+            <div class="spec-cell-line"><span>Dimensi Tanah:</span> <strong>Lebar 6m × Panjang 15m</strong></div>
+            <div class="spec-cell-line"><span>Arah Hadap:</span> <strong>Timur (Matahari Pagi)</strong></div>
+            <div class="spec-cell-line"><span>Estimasi KPR:</span> <strong>Rp 2.695.000 / bulan</strong></div>
+          </div>
+
+          <p class="inspector-desc-copy">
+            Rumah tunggal bernuansa tropis modern dengan plafon setinggi 3.6 meter untuk sirkulasi udara alami. Posisi paling dekat dengan gerbang utama dan pos keamanan.
+          </p>
+
+          <div class="inspector-button-stack">
+            <button type="button" class="btn-pill-primary full-width" onclick="openBookingModal('unit-1')">
+              Pesan Kavling Ini Sekarang
+            </button>
+            <button type="button" class="btn-pill-pass full-width" onclick="openDetailModal('unit-1')">
+              Lihat Spesifikasi & Denah Lengkap
+            </button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 3: KALKULATOR KPR & SOP KELENGKAPAN BERKAS         -->
+    <!-- ======================================================== -->
+    <section class="fresha-view-pane" id="viewKPRGuide">
+      <div class="view-header-simple">
+        <div>
+          <h2 class="fresha-section-title">Kalkulator KPR & Persyaratan Berkas</h2>
+          <p class="fresha-section-subtitle">Simulasikan angsuran bulanan menggunakan suku bunga bank rekanan resmi dan persiapkan dokumen pra-kualifikasi.</p>
+        </div>
+      </div>
+
+      <div class="fresha-two-col-layout">
+        <!-- Calculator Card -->
+        <div class="fresha-surface-card">
+          <h3 class="card-title-lg">Simulasi Cicilan KPR</h3>
+          <p class="card-sub-muted">Perhitungan anuitas transparan berbasis margin suku bunga tetap bank rekanan.</p>
+
+          <div class="fresha-form-stack">
+            <div class="form-group-block">
+              <label for="calcPrice" class="field-label-text">Harga Resmi Kavling (Rp)</label>
+              <input type="number" id="calcPrice" class="form-input-pill" value="385000000" oninput="calculateKPR()">
+            </div>
+
+            <!-- Bank Selection Buttons -->
+            <div class="form-group-block">
+              <label class="field-label-text">Pilihan Bank Rekanan Resmi</label>
+              <div class="bank-chips-cluster">
+                <button type="button" class="bank-chip active" onclick="selectBankPartner(this, 4.75)">
+                  <span class="chip-name">BTN Syariah</span>
+                  <span class="chip-rate">Margin 4.75%</span>
+                </button>
+                <button type="button" class="bank-chip" onclick="selectBankPartner(this, 5.25)">
+                  <span class="chip-name">Bank Mandiri</span>
+                  <span class="chip-rate">Bunga 5.25%</span>
+                </button>
+                <button type="button" class="bank-chip" onclick="selectBankPartner(this, 5.50)">
+                  <span class="chip-name">Bank BCA</span>
+                  <span class="chip-rate">Bunga 5.50%</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group-block">
+              <div class="slider-header-flex">
+                <label for="calcDP" class="field-label-text">Uang Muka (DP)</label>
+                <span class="slider-output-val" id="dpPercentLabel">10% (Rp 38.500.000)</span>
+              </div>
+              <input type="range" id="calcDP" class="fresha-slider" min="5" max="50" step="5" value="10" oninput="calculateKPR()">
+            </div>
+
+            <div class="grid-two-equal">
+              <div class="form-group-block">
+                <label for="calcTenor" class="field-label-text">Jangka Waktu (Tenor)</label>
+                <select id="calcTenor" class="form-input-pill" onchange="calculateKPR()">
+                  <option value="10">10 Tahun (120 Bulan)</option>
+                  <option value="15" selected>15 Tahun (180 Bulan)</option>
+                  <option value="20">20 Tahun (240 Bulan)</option>
+                  <option value="25">25 Tahun (300 Bulan)</option>
+                </select>
+              </div>
+              <div class="form-group-block">
+                <label for="calcRate" class="field-label-text">Suku Bunga (% / Tahun)</label>
+                <input type="number" id="calcRate" class="form-input-pill" value="4.75" step="0.05" oninput="calculateKPR()">
+              </div>
+            </div>
+
+            <!-- Summary Output Card -->
+            <div class="calc-output-card">
+              <div class="output-line">
+                <span>Plafon Pinjaman Pokok:</span>
+                <strong id="outLoanAmount">Rp 346.500.000</strong>
+              </div>
+              <div class="output-line">
+                <span>Uang Muka (DP):</span>
+                <strong id="outDPAmount">Rp 38.500.000</strong>
+              </div>
+              <div class="output-line">
+                <span>Tanda Jadi (Booking Fee):</span>
+                <span>Rp 5.000.000 (Mengurangi DP)</span>
+              </div>
+              
+              <div class="output-total-highlight">
+                <div>
+                  <span class="total-heading">Estimasi Angsuran Bulanan</span>
+                  <div class="total-subtext">Fixed anuitas periode bank rekanan</div>
+                </div>
+                <div class="total-price-large" id="outMonthlyInstallment">Rp 2.695.000 / bln</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checklist Card -->
+        <div class="fresha-surface-card">
+          <h3 class="card-title-lg">Daftar Dokumen Permohonan KPR</h3>
+          <p class="card-sub-muted">Pastikan dokumen fisik berikut lengkap sebelum wawancara bank.</p>
+
+          <div class="fresha-checklist-stack">
+            <label class="fresha-check-row">
+              <input type="checkbox" checked>
+              <div class="check-text">
+                <strong>e-KTP Pemohon & Pasangan</strong>
+                <span>Lampirkan 2 lembar fotokopi yang jelas dan terbaca.</span>
+              </div>
+            </label>
+
+            <label class="fresha-check-row">
+              <input type="checkbox" checked>
+              <div class="check-text">
+                <strong>Kartu Keluarga (KK) & Surat Nikah</strong>
+                <span>Buku nikah KUA resmi atau Akta Cerai bagi yang berpisah.</span>
+              </div>
+            </label>
+
+            <label class="fresha-check-row">
+              <input type="checkbox" checked>
+              <div class="check-text">
+                <strong>NPWP Pribadi & Bukti Lapor SPT Tahunan</strong>
+                <span>Valid dan terdaftar aktif di sistem Ditjen Pajak.</span>
+              </div>
+            </label>
+
+            <label class="fresha-check-row">
+              <input type="checkbox">
+              <div class="check-text">
+                <strong>Slip Gaji Asli 3 Bulan Terakhir</strong>
+                <span>Dilengkapi stempel basah perusahaan dan Surat Keterangan Kerja.</span>
+              </div>
+            </label>
+
+            <label class="fresha-check-row">
+              <input type="checkbox">
+              <div class="check-text">
+                <strong>Rekening Koran Payroll 3 Bulan</strong>
+                <span>Cetak mutasi rekening tabungan dari bank penerbit gaji.</span>
+              </div>
+            </label>
+
+            <label class="fresha-check-row">
+              <input type="checkbox">
+              <div class="check-text">
+                <strong>Pasfoto Berwarna 3x4 (2 Lembar)</strong>
+                <span>Latar belakang merah untuk berkas akad kredit resmi.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="notice-callout-box">
+            <strong>Bantuan Pengembang:</strong> Tim Huniku siap mendampingi proses pemberkasan hingga penerbitan Surat Persetujuan Pemberian Kredit (SP3K) oleh bank.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 4: PORTAL LAYANAN WARGA & RETENSI GARANSI          -->
+    <!-- ======================================================== -->
+    <section class="fresha-view-pane" id="viewResident">
+      <div class="view-header-simple">
+        <div>
+          <h2 class="fresha-section-title">Portal Warga & Garansi Konstruksi</h2>
+          <p class="fresha-section-subtitle">Layanan purna-jual bergaransi 180 hari pasca serah terima kunci (BAST) dan pelacakan status teknisi.</p>
+        </div>
+        <button type="button" class="btn-pill-pass" onclick="switchUserRole('RESIDENT')">
+          Sinkronisasi Akun Ibu Ratna (Blok B-05)
+        </button>
+      </div>
+
+      <div class="fresha-resident-grid">
+        <!-- Resident Card Sidebar -->
+        <aside class="resident-summary-sidebar">
+          <div class="resident-profile-box">
+            <span class="user-unit-chip">Kavling Terverifikasi</span>
+            <h3 class="user-display-name">Ibu Ratna</h3>
+            <div class="user-lot-address">Blok B-05 • Sentral Garden Residence</div>
+
+            <div class="warranty-tracker-box">
+              <div class="warranty-label-flex">
+                <span>Garansi Retensi:</span>
+                <strong>142 Hari Tersisa</strong>
+              </div>
+              <div class="warranty-track-bar">
+                <div class="warranty-fill-bar" style="width: 78%;"></div>
+              </div>
+              <div class="warranty-subtext">Perbaikan gratis 180 hari mencakup atap bocor, dinding, pipa, dan kelistrikan.</div>
+            </div>
+
+            <div class="ipl-status-widget">
+              <div class="ipl-row-flex">
+                <div>
+                  <div class="ipl-title">Iuran Pemeliharaan (IPL)</div>
+                  <div class="ipl-period">Oktober 2026</div>
+                </div>
+                <span class="status-pill available">Lunas</span>
+              </div>
+              <div class="ipl-amount">Rp 150.000 / bln</div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Complaint Submission and Ticket History -->
+        <div class="resident-flow-main">
+          <!-- Submission Card -->
+          <div class="fresha-surface-card">
+            <h3 class="card-title-lg">Formulir Pelaporan Perbaikan Fasilitas</h3>
+            <p class="card-sub-muted">Laporan akan langsung diteruskan ke koordinator pengawas proyek dan teknisi rekanan.</p>
+
+            <form onsubmit="handleComplaintSubmit(event)">
+              <div class="grid-two-equal">
+                <div class="form-group-block">
+                  <label class="field-label-text">Nomor Kavling</label>
+                  <input type="text" id="complaintUnitInput" class="form-input-pill" value="Kavling Blok B-05 (Ibu Ratna)" readonly>
+                </div>
+                <div class="form-group-block">
+                  <label class="field-label-text">Jaminan Pemeliharaan</label>
+                  <input type="text" class="form-input-pill" value="Garansi Aktif (100% Ditanggung Pengembang)" readonly style="color: #2E7D32; font-weight: 700;">
+                </div>
+              </div>
+
+              <div class="form-group-block">
+                <label class="field-label-text">Kategori Masalah</label>
+                <div class="category-chips-row">
+                  <button type="button" class="cat-chip active" onclick="selectCategoryChip(this, 'Air & Pipa')">Air & Pipa</button>
+                  <button type="button" class="cat-chip" onclick="selectCategoryChip(this, 'Struktur & Dinding')">Struktur & Dinding</button>
+                  <button type="button" class="cat-chip" onclick="selectCategoryChip(this, 'Kelistrikan')">Kelistrikan</button>
+                  <button type="button" class="cat-chip" onclick="selectCategoryChip(this, 'Pintu & Jendela')">Pintu & Jendela</button>
+                </div>
+              </div>
+
+              <div class="form-group-block">
+                <label for="complaintDescInput" class="field-label-text">Deskripsi Kendala</label>
+                <textarea id="complaintDescInput" class="form-textarea-pill" rows="3" placeholder="Jelaskan detail lokasi masalah, contoh: Pipa sambungan wastafel dapur rembes air saat keran dinyalakan..." required></textarea>
+              </div>
+
+              <div class="upload-dropzone" onclick="document.getElementById('complaintFileInput').click()">
+                <input type="file" id="complaintFileInput" style="display: none;" accept="image/*" onchange="handleFileSelected(this)">
+                <div class="dropzone-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                </div>
+                <div class="dropzone-text" id="complaintUploadText">Unggah Foto Bukti Kendala (JPG, PNG maks 5 MB)</div>
+                <div class="dropzone-hint">Foto membantu teknisi menyiapkan alat sebelum survei ke rumah Anda.</div>
+              </div>
+
+              <div class="action-right-wrap">
+                <button type="submit" class="btn-pill-primary">
+                  Kirim Laporan Perbaikan
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- History Table Card -->
+          <div class="fresha-surface-card">
+            <h3 class="card-title-lg">Riwayat Pengaduan & Tracking Teknisi</h3>
+            <p class="card-sub-muted">Pelacakan status pengerjaan teknisi dan berita acara serah terima perbaikan.</p>
+
+            <div class="fresha-table-container">
+              <table class="fresha-data-table">
+                <thead>
+                  <tr>
+                    <th>No. Tiket</th>
+                    <th>Kategori Masalah</th>
+                    <th>Jaminan</th>
+                    <th>Status Pengerjaan</th>
+                    <th>Teknisi Bertugas</th>
+                  </tr>
+                </thead>
+                <tbody id="residentComplaintsTableBody">
+                  <!-- Injected by app.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- VIEW 5: KONSOL PENGEMBANG (DEVELOPER DESK)              -->
+    <!-- ======================================================== -->
+    <section class="fresha-view-pane" id="viewAdmin">
+      <div class="view-header-simple">
+        <div>
+          <h2 class="fresha-section-title">Konsol Inventaris Pengembang</h2>
+          <p class="fresha-section-subtitle">Pengawasan status kavling real-time, verifikasi berkas permohonan KPR, dan sinkronisasi transaksi.</p>
+        </div>
+        <button type="button" class="btn-pill-pass" onclick="showToast('Data master kavling berhasil diekspor')">
+          Ekspor CSV
+        </button>
+      </div>
+
+      <!-- Metric Cards -->
+      <div class="fresha-metrics-row">
+        <div class="fresha-metric-box">
+          <span class="m-label">Total Kavling Kawasan</span>
+          <div class="m-val">42 Unit</div>
+          <span class="m-sub">3 Kawasan Cluster</span>
+        </div>
+        <div class="fresha-metric-box">
+          <span class="m-label">Kavling Tersedia</span>
+          <div class="m-val text-success">28 Unit</div>
+          <span class="m-sub">Siap dipasarkan</span>
+        </div>
+        <div class="fresha-metric-box">
+          <span class="m-label">Sedang Dibooking</span>
+          <div class="m-val text-warning">9 Unit</div>
+          <span class="m-sub">Verifikasi berkas & KPR</span>
+        </div>
+        <div class="fresha-metric-box">
+          <span class="m-label">Akad Kredit Selesai</span>
+          <div class="m-val text-primary">5 Unit</div>
+          <span class="m-sub">Penghuni resmi kawasan</span>
+        </div>
+      </div>
+
+      <!-- Master Table -->
+      <div class="fresha-surface-card">
+        <div class="table-top-meta">
+          <div>
+            <h3 class="card-title-lg">Daftar Kavling Real-Time</h3>
+            <p class="card-sub-muted">Perubahan status pada tabel ini langsung sinkron ke katalog dan masterplan 2D.</p>
+          </div>
+          <span class="status-pill available">Sinkronisasi Mutex Aktif</span>
+        </div>
+
+        <div class="fresha-table-container">
+          <table class="fresha-data-table">
+            <thead>
+              <tr>
+                <th>Kode Kavling</th>
+                <th>Cluster & Tipe</th>
+                <th>Harga Resmi</th>
+                <th>Status Saat Ini</th>
+                <th>Kontrol Ketersediaan</th>
+                <th>Aksi Cepat</th>
+              </tr>
+            </thead>
+            <tbody id="adminInventoryTableBody">
+              <!-- Injected by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 3. MODAL: DETAIL SPESIFIKASI DENAH KAVLING -->
+  <div class="fresha-modal-backdrop" id="modalUnitDetail" onclick="handleBackdropClick(event, 'modalUnitDetail')">
+    <div class="fresha-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle">
+      <div class="modal-dialog-header">
+        <h3 id="detailModalTitle">Spesifikasi Detail Kavling</h3>
+        <button type="button" class="btn-modal-close" onclick="closeModal('modalUnitDetail')" aria-label="Tutup modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-dialog-content">
+        <div class="modal-photo-holder">
+          <img id="detailModalImage" src="" alt="Fasad Bangunan" class="modal-unit-img">
+        </div>
+
+        <div class="modal-price-strip">
+          <div>
+            <span class="modal-type-tag" id="detailModalType">Tipe 45 / 90</span>
+            <div class="modal-cluster-tag" id="detailModalCluster">Grand Alessandra Residence</div>
+          </div>
+          <div class="modal-price-figure" id="detailModalPrice">Rp 385.000.000</div>
+        </div>
+
+        <p class="modal-desc-body" id="detailModalDesc">
+          Fasad rumah bernuansa tropis modern dengan plafon setinggi 3.6 meter untuk sirkulasi udara alami.
+        </p>
+
+        <div class="modal-specs-block">
+          <div class="specs-block-title">Spesifikasi Material & Fasilitas</div>
+          <ul class="specs-bullet-items" id="detailModalSpecs">
+            <!-- Injected by JS -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-dialog-footer">
+        <button type="button" class="btn-pill-pass" onclick="closeModal('modalUnitDetail')">
+          Tutup
+        </button>
+        <button type="button" class="btn-pill-primary" id="detailModalBookingBtn" onclick="closeModal('modalUnitDetail'); openBookingModal(state.selectedUnitForBooking ? state.selectedUnitForBooking.id : 'unit-1');">
+          Pesan Kavling Ini Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. MODAL: KONFIRMASI PENGUNCIAN UNIT (MUTEX LOCK) -->
+  <div class="fresha-modal-backdrop" id="modalBookingConfirm" onclick="handleBackdropClick(event, 'modalBookingConfirm')">
+    <div class="fresha-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="bookingConfirmTitle">
+      <div class="modal-dialog-header">
+        <h3 id="bookingConfirmTitle">Pemesanan Kavling (Anti-Double Booking)</h3>
+        <button type="button" class="btn-modal-close" onclick="closeModal('modalBookingConfirm')" aria-label="Tutup modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-dialog-content">
+        <div class="mutex-notice-pill">
+          <strong>Jaminan Penguncian Slot:</strong> Unit ini langsung dikunci atas nama Anda di server agar tidak dapat dipilih calon pembeli lain secara bersamaan.
+        </div>
+
+        <div class="booking-lot-summary">
+          <div class="summary-code-large" id="modalBookingUnitCode">BLOK A-01</div>
+          <div class="summary-cluster-text" id="modalBookingCluster">Grand Alessandra Residence</div>
+          <div class="summary-price-text" id="modalBookingPrice">Rp 385.000.000</div>
+        </div>
+
+        <form id="bookingSubmissionForm" onsubmit="executeAtomicBooking(event)">
+          <div class="form-group-block" style="margin-bottom: 12px;">
+            <label for="bookingBuyerNameInput" class="field-label-text">Nama Lengkap (Sesuai e-KTP)</label>
+            <input type="text" id="bookingBuyerNameInput" class="form-input-pill" value="Rizky Pratama" required>
+          </div>
+
+          <div class="grid-two-equal" style="margin-bottom: 16px;">
+            <div class="form-group-block">
+              <label for="bookingBuyerPhoneInput" class="field-label-text">Nomor WhatsApp</label>
+              <input type="tel" id="bookingBuyerPhoneInput" class="form-input-pill" value="0812-7890-1234" required>
+            </div>
+            <div class="form-group-block">
+              <label for="bookingBuyerEmailInput" class="field-label-text">Alamat Email</label>
+              <input type="email" id="bookingBuyerEmailInput" class="form-input-pill" value="rizky.pratama@example.com" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-pill-primary full-width">
+            Konfirmasi Pemesanan & Terbitkan Tiket
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. MODAL: DIGITAL BOOKING PASS VOUCHER -->
+  <div class="fresha-modal-backdrop" id="modalBookingPassSuccess" onclick="handleBackdropClick(event, 'modalBookingPassSuccess')">
+    <div class="fresha-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="passVoucherTitle">
+      <div class="modal-dialog-header">
+        <h3 id="passVoucherTitle">Digital Booking Pass Resmi</h3>
+        <button type="button" class="btn-modal-close" onclick="closeModal('modalBookingPassSuccess')" aria-label="Tutup modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-dialog-content">
+        <div class="fresha-pass-voucher">
+          <div class="pass-top-flex">
+            <div>
+              <span class="pass-code-label">KODE RESERVASI RESMI</span>
+              <div class="pass-code-num" id="passModalCode">HN-2026-B05</div>
+            </div>
+            <span class="status-pill available">Terkunci Resmi</span>
+          </div>
+
+          <div class="pass-details-row">
+            <div class="pass-qr-box">
+              <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="#212529" stroke-width="1.75">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+                <rect x="14" y="14" width="3" height="3"></rect>
+                <rect x="18" y="18" width="3" height="3"></rect>
+                <line x1="14" y1="18" x2="14" y2="18.01"></line>
+                <line x1="18" y1="14" x2="18" y2="14.01"></line>
+              </svg>
+            </div>
+            <div class="pass-specs-list">
+              <div><span>Kavling:</span> <strong id="passModalUnit">Blok B-05 (Sentral Garden)</strong></div>
+              <div><span>Nama Pemesan:</span> <strong id="passModalBuyer">Rizky Pratama</strong></div>
+              <div><span>Waktu Pemesanan:</span> <span id="passModalTime">02 Oktober 2026, 14:30 WIB</span></div>
+            </div>
+          </div>
+
+          <div class="pass-footer-notice">
+            Tunjukkan voucher digital ini kepada staf administrasi kantor pemasaran dalam waktu 3×24 jam untuk verifikasi berkas dan pengikatan Surat Pesanan Rumah (SPR).
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-dialog-footer">
+        <button type="button" class="btn-pill-pass" onclick="window.print()">
+          Cetak Dokumen
+        </button>
+        <button type="button" class="btn-pill-primary" onclick="closeModal('modalBookingPassSuccess')">
+          Selesai
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. MODAL: SIMULASI AKUN 1-KLIK (ROLE SWITCHER) -->
+  <div class="fresha-modal-backdrop" id="modalAuthRoleSwitcher" onclick="handleBackdropClick(event, 'modalAuthRoleSwitcher')">
+    <div class="fresha-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="roleSwitcherTitle">
+      <div class="modal-dialog-header">
+        <h3 id="roleSwitcherTitle">Pilih Profil Simulasi Pengguna</h3>
+        <button type="button" class="btn-modal-close" onclick="closeModal('modalAuthRoleSwitcher')" aria-label="Tutup modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-dialog-content">
+        <p class="role-lead-text">
+          Pilih salah satu peran pengguna berikut untuk menguji alur kerja masing-masing pemangku kepentingan:
+        </p>
+
+        <div class="role-options-stack">
+          <button type="button" class="role-item-btn" onclick="switchUserRole('BUYER'); closeModal('modalAuthRoleSwitcher'); navigateTo('viewKatalog');">
+            <div>
+              <div class="role-item-title">Calon Pembeli Properti</div>
+              <div class="role-item-sub">Rizky Pratama (Karyawan Swasta, 29 Tahun)</div>
+              <div class="role-item-desc">Mencari kavling, memeriksa denah 2D, dan simulasi angsuran KPR.</div>
+            </div>
+            <span class="role-action-tag">Pilih</span>
+          </button>
+
+          <button type="button" class="role-item-btn" onclick="switchUserRole('RESIDENT'); closeModal('modalAuthRoleSwitcher'); navigateTo('viewResident');">
+            <div>
+              <div class="role-item-title">Warga Penghuni Kawasan</div>
+              <div class="role-item-sub">Ibu Ratna (Penghuni Blok B-05, Sentral Garden)</div>
+              <div class="role-item-desc">Memantau sisa masa garansi konstruksi 180 hari dan lapor kerusakan fasilitas.</div>
+            </div>
+            <span class="role-action-tag">Pilih</span>
+          </button>
+
+          <button type="button" class="role-item-btn" onclick="switchUserRole('ADMIN'); closeModal('modalAuthRoleSwitcher'); navigateTo('viewAdmin');">
+            <div>
+              <div class="role-item-title">Staf Pengembang Kawasan</div>
+              <div class="role-item-sub">Doni Haryanto (Koordinator Properti & Penjualan)</div>
+              <div class="role-item-desc">Mengubah status kavling real-time, mengawasi booking, dan disposisi teknisi.</div>
+            </div>
+            <span class="role-action-tag">Pilih</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. FLOATING CONSULTATION PILL -->
+  <button type="button" class="floating-consult-pill" onclick="toggleChatDrawer()" aria-label="Konsultasi Pemasaran">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span>Hubungi Sales</span>
+  </button>
+
+  <!-- Live Chat Drawer Panel -->
+  <div id="webChatDrawer" class="fresha-chat-drawer" style="display: none;">
+    <div class="chat-drawer-top">
+      <div>
+        <div class="agent-title">Layanan Konsultasi Huniku</div>
+        <div class="agent-location">Kantor Pemasaran Sukarame (Online)</div>
+      </div>
+      <button type="button" class="btn-chat-close" onclick="toggleChatDrawer()">✕</button>
+    </div>
+    <div class="chat-message-history">
+      <div class="chat-item-bubble incoming">
+        Halo! Ada tipe kavling atau kawasan yang ingin Anda tanyakan atau dijadwalkan survei ke lokasi perumahan besok?
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <input type="text" id="chatDrawerInput" class="form-input-pill" placeholder="Ketik pesan Anda...">
+      <button type="button" class="btn-pill-primary" style="padding: 8px 16px;" onclick="sendChatMessage()">Kirim</button>
+    </div>
+  </div>
+
+  <!-- 8. FRESHA-INSPIRED FOOTER -->
+  <footer class="fresha-footer">
+    <div class="footer-wrap-container">
+      <div class="footer-grid-row">
+        <div class="footer-brand-cell">
+          <div class="footer-logo">huniku</div>
+          <p class="footer-desc-text">
+            Platform manajemen dan pemesanan kavling perumahan terpadu berbasis transparansi ketersediaan real-time, pra-kualifikasi perbankan, dan ekosistem purna-jual.
+          </p>
+          <div class="footer-badge-project">
+            PjBL TRPL Politeknik Negeri Lampung • 2026
+          </div>
+        </div>
+
+        <div class="footer-nav-cell">
+          <div class="footer-heading">Kawasan Cluster</div>
+          <ul class="footer-links">
+            <li>Grand Alessandra Residence (Sukarame)</li>
+            <li>Sentral Garden Residence (Natar)</li>
+            <li>Villa Permata Indah (Kedaton)</li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-cell">
+          <div class="footer-heading">Bank Rekanan KPR</div>
+          <ul class="footer-links">
+            <li>Bank BTN Syariah</li>
+            <li>Bank Mandiri KPR</li>
+            <li>Bank BCA KPR</li>
+          </ul>
+        </div>
+
+        <div class="footer-nav-cell">
+          <div class="footer-heading">Kantor Pemasaran</div>
+          <p class="footer-address">
+            Jl. Ryacudu No. 45, Way Dadi, Sukarame, Kota Bandar Lampung 35131.<br>
+            Telepon: (0721) 789-0123 / 0812-7890-1234
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-copyright-strip">
+        <div>Hak Cipta © 2026 Tim Pengembang Huniku. Seluruh hak dilindungi undang-undang.</div>
+        <div>Standar Mutu: SNI Konstruksi & Perizinan PBG/SLF Resmi</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
